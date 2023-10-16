@@ -1,20 +1,42 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 public class Cocktail {
     private final String name_of_cocktail;
     private  List<Ingredient> ingredients;
-    private  List<List<Actions>> actions;
+    private  List<Actions> actions;
     private static int count_of_cocktails;
     public Cocktail(String name_of_cocktail){
         this.name_of_cocktail = name_of_cocktail;
         this.ingredients = new ArrayList<>();
-        this.actions = new ArrayList<List<Actions>>();
+        this.actions = new ArrayList<Actions>();
+    }
+    public Cocktail(String name_of_cocktail,List<Ingredient> ingredients,List<Actions> actions){
+        this.name_of_cocktail = name_of_cocktail;
+        this.ingredients = ingredients;
+        this.actions = actions;
+    }
+    public Cocktail(){
+        this.name_of_cocktail = new  Random_string_generator().generate_random_string();
+        this.ingredients = new ArrayList<>();
+        this.actions = new ArrayList<Actions>();
+        int bound = new Random().nextInt(3);
+        for(int i=0;i<bound;i++){
+            Actions actions1 = Actions.values()[new Random().nextInt(Actions.values().length)];
+            this.actions.add(actions1);
+        }
+        bound = new Random().nextInt(3);
+        for(int i=0;i<bound;i++){
+            ingredients.add(new Ingredient(new Random_string_generator().generate_random_string()
+                    ,new Random().nextDouble()));
+        }
+
     }
 
-    public List<List<Actions>> getActions() {
+
+
+    public List<Actions> getActions() {
         return actions;
     }
 
@@ -27,7 +49,7 @@ public class Cocktail {
     }
 
     public void setActions(Actions action) {
-        this.actions.add(Collections.singletonList(action));
+        this.actions.add(action);
     }
 
     public void setIngredients(Ingredient ingredients) {
@@ -44,7 +66,7 @@ public class Cocktail {
             System.out.println(ingredient.getName_of_ingredient() + ": " + ingredient.getQuantity() + " л");
         }
         System.out.println("Последовательность действий:");
-        for (List<Actions> action : actions) {
+        for (Actions action : actions) {
             System.out.println(action);
 
         }
